@@ -56,3 +56,5 @@ typings/
 
 # npm lock file
 package-lock.json
+
+.idea/
