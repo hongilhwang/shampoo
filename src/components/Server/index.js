@@ -1,10 +1,11 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { InputBase, IconButton } from '@material-ui/core';
+import { InputBase, IconButton, TextField } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 import SettingsInputCompositeIcon from '@material-ui/icons/SettingsInputComposite';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+const DEFAULT_SERVER_URL = 'http://localhost:9200';
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'relative',
@@ -32,13 +33,14 @@ const useStyles = makeStyles(theme => ({
   },
   inputRoot: {
     color: 'inherit',
+    width: 300,
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: 200,
+      width: '100%',
     },
   },
   iconButton: {
@@ -46,39 +48,42 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
-
-
 const Server = () => {
 //TODO : 서버 주소를 입력하고 커넥션을 하면 index 정보를 불러 온다.
   const classes = useStyles();
-  const [url, setUrl] = React.useState();
+  const [url, setUrl] = React.useState(DEFAULT_SERVER_URL);
 
-  const handleConnectServer = ()=>{};
-  const handleChangeServerURL = (e)=>{
+  const handleClickConnectServer = React.useCallback(() => {
+    console.log(url);
+  },[url]);
+  const handleChangeServerURL = React.useCallback((e) => {
     setUrl(e.target.value);
-  };
+  },[]);
 
-  const renderInput = React.useCallback(params => (
+  const renderInput = React.useCallback(params => {
+// TODO : INPUT 박스의 underline 제거
+    return (
     <>
       <div className={classes.serverIcon}>
         <LinkIcon />
       </div>
-      <InputBase
+      <TextField
         {...params}
         placeholder="Server URL"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-        defaultValue={'http://localhost:9200'}
-        inputProps={{ 'aria-label': 'Server URL' }}
+        className={classes.inputRoot}
+        InputProps={
+          {
+            ...params.InputProps,
+            type: 'search',
+            className : classes.inputInput,
+          }
+        }
       />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={handleConnectServer}>
+      <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={handleClickConnectServer}>
         <SettingsInputCompositeIcon style={{color: '#FFF'}}/>
       </IconButton>
     </>
-  ),[classes, handleChangeServerURL]);
+  )},[classes, handleChangeServerURL, handleClickConnectServer]);
 
   return (
     <div className={classes.root}>
@@ -86,6 +91,7 @@ const Server = () => {
         freeSolo
         options={['A','B']}
         renderInput={renderInput}
+        value={url}
       />
     </div>
   );
