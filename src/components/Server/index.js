@@ -1,10 +1,8 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { IconButton, TextField } from '@material-ui/core';
-import LinkIcon from '@material-ui/icons/Link';
-import SettingsInputCompositeIcon from '@material-ui/icons/SettingsInputComposite';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
+import InputBox from 'components/Server/components/InputBox';
 
 const DEFAULT_SERVER_URL = 'http://localhost:9200';
 const DUMMY_OPTIONS = [];
@@ -84,49 +82,20 @@ const Server = () => {
   },[url]);
 
   const renderInput = React.useCallback(params =>(
-    <>
-      <div className={classes.serverIcon}>
-        <LinkIcon />
-      </div>
-      <TextField
-        {...params}
-        placeholder="Server URL"
-        className={classes.inputRoot}
-        variant={"outlined"}
-        margin="dense"
-        InputProps={
-          {
-            ...params.InputProps,
-            type: 'text',
-            className : classes.inputProps,
-            classes: {
-              input: classes.inputPropsInput,
-              notchedOutline : classes.inputNotchedOutline
-            }
-          }
-        }
-      />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={handleClickConnectServer}>
-        <SettingsInputCompositeIcon style={{color: '#FFF'}}/>
-      </IconButton>
-    </>
+    <InputBox autocompleteParams={params} onClick={handleClickConnectServer}/>
   ),[classes, handleClickConnectServer]);
-
-  const autoComplate = React.useMemo(()=>(
-    <Autocomplete
-      className={classes.autocomplete}
-      freeSolo
-      options={DUMMY_OPTIONS}
-      renderInput={renderInput}
-      onChange={handleChangeServerURL}
-      defaultValue={DEFAULT_SERVER_URL}
-      value={url}
-    />
-  ),[url, DUMMY_OPTIONS]);
 
   return (
     <div className={classes.root}>
-      {autoComplate}
+      <Autocomplete
+        className={classes.autocomplete}
+        freeSolo
+        options={DUMMY_OPTIONS}
+        renderInput={renderInput}
+        onChange={handleChangeServerURL}
+        defaultValue={DEFAULT_SERVER_URL}
+        value={url}
+      />
     </div>
   );
 };
