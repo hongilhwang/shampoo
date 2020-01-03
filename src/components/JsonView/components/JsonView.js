@@ -5,7 +5,7 @@ import ReactJson from 'react-json-view';
 const JsonView = () => (
   <JsonViewContext.Consumer>
     {
-      context => <ReactJson src={context.state} />
+      ([state]) => (<ReactJson src={state} />)
     }
   </JsonViewContext.Consumer>
 );

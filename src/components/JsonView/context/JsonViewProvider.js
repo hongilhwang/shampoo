@@ -12,9 +12,6 @@ const JsonViewProvider = ({children}) => {
   React.useEffect(()=>{
   },[state]);
 
-  console.log(children);
-  console.log('aaaa');
-
   return (
     <JsonViewContext.Provider value={[state, setter]}>
       {children}
