@@ -72,22 +72,26 @@ const Server = () => {
     const response = await axios.get(url);
     console.log(response);
     setJsonViewSource(response);
-  },[]);
+  },[setJsonViewSource]);
 
   const handleClickConnectServer = React.useCallback(() => {
     console.log(url);
   },[url]);
   const handleChangeServerURL = React.useCallback((e, text) => {
+    console.log('handleChange', text);
     setUrl(text);
   },[]);
+  const handleBlurInputBox = React.useCallback((e)=>{
+    setUrl(e.target.value);
+  },[setUrl]);
 
   React.useEffect(()=>{
     handleConnectServer(url);
-  },[url]);
+  },[url, handleConnectServer]);
 
   const renderInput = React.useCallback(params =>(
     <InputBox autocompleteParams={params} onClick={handleClickConnectServer}/>
-  ),[classes, handleClickConnectServer]);
+  ),[handleClickConnectServer]);
 
   return (
     <div className={classes.root}>
@@ -97,6 +101,7 @@ const Server = () => {
         options={DUMMY_OPTIONS}
         renderInput={renderInput}
         onChange={handleChangeServerURL}
+        onBlur={handleBlurInputBox}
         defaultValue={DEFAULT_SERVER_URL}
         value={url}
       />
