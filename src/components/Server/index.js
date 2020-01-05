@@ -4,6 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios';
 import InputBox from 'components/Server/components/InputBox';
 import {useJsonView} from 'components/JsonView';
+import apis from 'apis';
 
 const DEFAULT_SERVER_URL = 'http://localhost:9200';
 const DUMMY_OPTIONS = [];
@@ -69,7 +70,8 @@ const Server = () => {
   const handleConnectServer = React.useCallback(async (url)=>{
     //TODO : api 사용부는 API 디렉토리에 저장한다.
     //TODO : url은 useContext로 관리할까???....그렇게 된다면 어떻게 될까??? 리덕스 도입??
-    const response = await axios.get(url);
+    console.log(apis);
+    const response = await apis.getRoot(url);
     console.log(response);
     setJsonViewSource(response);
   },[setJsonViewSource]);
