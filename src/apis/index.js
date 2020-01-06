@@ -1,8 +1,8 @@
 import axios from "axios";
 
 
-const getRoot = (url) => {
-  return axios.get(url);
+const getRoot = () => {
+  return axios.get('');
 };
 
 export default ({
