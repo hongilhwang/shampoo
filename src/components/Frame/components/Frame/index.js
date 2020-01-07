@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Frame = ({header, children}) => {
+const Frame = ({leftHeader,rightHeader, children}) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -107,7 +107,8 @@ const Frame = ({header, children}) => {
           >
             <MenuIcon />
           </IconButton>
-          {header}
+          {leftHeader}
+          {rightHeader}
         </Toolbar>
       </AppBar>
       <Drawer

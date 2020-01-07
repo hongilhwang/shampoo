@@ -6,7 +6,6 @@ import { useJsonView } from 'components/JsonView';
 import useBaseURL from '../hooks/useBaseURL';
 import apis from 'apis';
 
-const DEFAULT_SERVER_URL = 'http://localhost:9200';
 const DUMMY_OPTIONS = [];
 
 const useStyles = makeStyles(theme => ({
@@ -66,32 +65,36 @@ const Server = () => {
   const classes = useStyles();
   const [server, setServer] = useBaseURL();
   const [jsonViewSource, setJsonViewSource] = useJsonView();
+  const [currentInputBoxText, setCurrentInputBoxText] = React.useState(`${server.protocol}://${server.baseURL}:${server.port}`);
 
-  const handleConnectServer = React.useCallback(async ()=>{
-    //TODO : api 사용부는 API 디렉토리에 저장한다.
-    //TODO : url은 useContext로 관리할까???....그렇게 된다면 어떻게 될까??? 리덕스 도입??
+  const connect = React.useCallback(async ()=>{
     const response = await apis.getRoot();
+    //
     console.log('response',response);
     setJsonViewSource(response);
-  },[setJsonViewSource]);
+  },[]);
 
   const handleClickConnectServer = React.useCallback(() => {
-    console.log(server);
-  },[server]);
+    connect();
+  },[connect]);
   const handleChangeServerURL = React.useCallback((e, text) => {
     setServer(text);
   },[]);
   const handleBlurInputBox = React.useCallback((e)=>{
     setServer(e.target.value);
-  },[setServer]);
+  },[]);
 
   React.useEffect(()=>{
-    handleConnectServer();
-  },[server, handleConnectServer]);
+    connect();
+  },[server, connect]);
 
   const renderInput = React.useCallback(params =>(
     <InputBox autocompleteParams={params} onClick={handleClickConnectServer}/>
   ),[handleClickConnectServer]);
+
+  const handleKeyPress = React.useCallback((e)=>{
+    setCurrentInputBoxText(e.target.value);
+  },[]);
 
   return (
     <div className={classes.root}>
@@ -102,8 +105,9 @@ const Server = () => {
         renderInput={renderInput}
         onChange={handleChangeServerURL}
         onBlur={handleBlurInputBox}
-        defaultValue={DEFAULT_SERVER_URL}
-        value={`${server.protocol}://${server.baseURL}:${server.port}`}
+        onKeyPress={handleKeyPress}
+        defaultValue={currentInputBoxText}
+        value={currentInputBoxText}
       />
     </div>
   );
