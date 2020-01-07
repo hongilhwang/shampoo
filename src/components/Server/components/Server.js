@@ -3,6 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InputBox from './InputBox';
 import { useJsonView } from 'components/JsonView';
+import { useIndices } from 'components/Indices';
 import useBaseURL from '../hooks/useBaseURL';
 import apis from 'apis';
 
@@ -65,12 +66,13 @@ const Server = () => {
   const classes = useStyles();
   const [server, setServer] = useBaseURL();
   const [jsonViewSource, setJsonViewSource] = useJsonView();
+  const [indices, setIndices] = useIndices();
   const [currentInputBoxText, setCurrentInputBoxText] = React.useState(`${server.protocol}://${server.baseURL}:${server.port}`);
 
   const connect = React.useCallback(async ()=>{
     const response = await apis.getRoot();
-    //
-    console.log('response',response);
+    const indicesResponse = await apis.getIndices();
+    setIndices(indicesResponse.data);
     setJsonViewSource(response);
   },[]);
 

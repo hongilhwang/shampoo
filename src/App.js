@@ -3,25 +3,27 @@ import { Frame,  Header } from 'components/Frame'
 import Server from 'components/Server';
 import JsonView, {JsonViewProvider} from 'components/JsonView';
 import { ServerProvider } from 'components/Server';
-import Indices from "components/Indices";
+import Indices, {IndicesProvider} from "components/Indices";
 
 const App = () => {
   return (
     <ServerProvider>
-      <JsonViewProvider>
-        <Frame
-          leftHeader={(
-            <Header logo={'Sauron'} >
-              <Server />
-            </Header>
-          )}
-          rightHeader={(
-            <Indices/>
-          )}
-        >
-          <JsonView />
-        </Frame>
-      </JsonViewProvider>
+      <IndicesProvider>
+        <JsonViewProvider>
+          <Frame
+            leftHeader={(
+              <Header logo={'Sauron'} >
+                <Server />
+              </Header>
+            )}
+            rightHeader={(
+              <Indices/>
+            )}
+          >
+            <JsonView />
+          </Frame>
+        </JsonViewProvider>
+      </IndicesProvider>
     </ServerProvider>
   );
 };
