@@ -41,6 +41,17 @@ function App(){
     }
   },[axios, setJsonViewSource, setIndices]);
 
+  const handleChange = React.useCallback(async (index)=>{
+    try{
+      if( index ){
+        const response = await apis.getData(index.index);
+        setJsonViewSource(response);
+      }
+    }catch(e){
+      console.error(e);
+      enqueueSnackbar(e.message, { variant: 'error' });
+    }
+  },[]);
 
   return (
     <Frame
@@ -50,7 +61,7 @@ function App(){
         </Header>
       )}
       rightHeader={(
-        <Indices/>
+        <Indices onChange={handleChange}/>
       )}
     >
       <JsonView />

@@ -1,9 +1,10 @@
 import React from 'react';
 import {fade, makeStyles} from '@material-ui/core/styles';
-import {IconButton, Select, MenuItem, TextField} from '@material-ui/core';
+import {IconButton, TextField} from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import useIndices from "../hooks/useIndices";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,12 +58,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Indices = () => {
+const Indices = ({onChange}) => {
   const classes = useStyles();
   const [index, setIndex] = React.useState('');
   const [indices] = useIndices();
 
-  const sortedIndices = React.useMemo(()=>indices.sort((a,b) => (a.index.localeCompare(b.index, undefined, {numeric: true, sensitivity: 'base'}))),[indices]);
+  const sortedIndices = React.useMemo(
+    ()=>(indices.sort((a,b) => (a.index.localeCompare(b.index, undefined, {numeric: true, sensitivity: 'base'})))),
+    [indices]);
+
+  React.useEffect(()=>{
+    onChange(index);
+  },[index]);
 
   const handleChange = React.useCallback((e, text) => {
     setIndex(text);
@@ -110,6 +117,14 @@ const Indices = () => {
       </IconButton>
     </div>
   );
+};
+
+Indices.protoTypes = {
+  onChange: PropTypes.func
+};
+
+Indices.defaultProps = {
+  onChange : ()=>{console.log('Not found function.');}
 };
 
 export default Indices;

@@ -82,7 +82,7 @@ Server.propTypes = {
   onConnect : PropTypes.func
 };
 Server.defaultProps = {
-  onConnect: ()=> false
+  onConnect: ()=> {console.log('Not found function.');}
 };
 
 export default Server;

@@ -9,8 +9,11 @@ const getIndices = () => {
   return axios.get('/_cat/indices?format=json');
 };
 
+const getData = (index) => axios.get(`${index}/_search?q=*`);
+
 export default ({
   getRoot,
-  getIndices
+  getIndices,
+  getData
 });
 
