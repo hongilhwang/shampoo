@@ -2,10 +2,8 @@ import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InputBox from './InputBox';
-import { useJsonView } from 'components/JsonView';
-import { useIndices } from 'components/Indices';
 import useBaseURL from '../hooks/useBaseURL';
-import apis from 'apis';
+import PropTypes from 'prop-types';
 
 const DUMMY_OPTIONS = [];
 
@@ -29,70 +27,35 @@ const useStyles = makeStyles(theme => ({
   autocomplete:{
     display: 'flex',
   },
-  serverIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: 300,
-    margin: '0px',
-  },
-  inputProps: {
-    padding: theme.spacing(0, 0, 0, 7),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '100%',
-    },
-  },
-  inputPropsInput: {
-    paddingLeft: '0px'
-  },
-  iconButton: {
-    padding: '5px',
-  },
-  inputNotchedOutline : {
-    borderWidth: 0
-  }
 }));
 
-const Server = () => {
+const Server = ({onConnect}) => {
   const classes = useStyles();
+  const [connected, setConnected] = React.useState(false);
   const [server, setServer] = useBaseURL();
-  const [jsonViewSource, setJsonViewSource] = useJsonView();
-  const [indices, setIndices] = useIndices();
   const [currentInputBoxText, setCurrentInputBoxText] = React.useState(`${server.protocol}://${server.baseURL}:${server.port}`);
 
-  const connect = React.useCallback(async ()=>{
-    const response = await apis.getRoot();
-    const indicesResponse = await apis.getIndices();
-    setIndices(indicesResponse.data);
-    setJsonViewSource(response);
-  },[]);
+  const handleConnectedResult = React.useCallback((result)=>{
+    setConnected(result);
+  },[setConnected]);
 
   const handleClickConnectServer = React.useCallback(() => {
-    connect();
-  },[connect]);
+    onConnect(handleConnectedResult);
+  },[onConnect, handleConnectedResult]);
   const handleChangeServerURL = React.useCallback((e, text) => {
     setServer(text);
-  },[]);
+  },[setServer]);
   const handleBlurInputBox = React.useCallback((e)=>{
     setServer(e.target.value);
-  },[]);
+  },[setServer]);
 
   React.useEffect(()=>{
-    connect();
-  },[server, connect]);
+    onConnect(handleConnectedResult);
+  },[server, onConnect, handleConnectedResult]);
 
   const renderInput = React.useCallback(params =>(
-    <InputBox autocompleteParams={params} onClick={handleClickConnectServer}/>
-  ),[handleClickConnectServer]);
+    <InputBox autocompleteParams={params} onClick={handleClickConnectServer} connected={connected}/>
+  ),[handleClickConnectServer, connected]);
 
   const handleKeyPress = React.useCallback((e)=>{
     setCurrentInputBoxText(e.target.value);
@@ -113,6 +76,13 @@ const Server = () => {
       />
     </div>
   );
+};
+
+Server.propTypes = {
+  onConnect : PropTypes.func
+};
+Server.defaultProps = {
+  onConnect: ()=> false
 };
 
 export default Server;

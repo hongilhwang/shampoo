@@ -7,6 +7,10 @@ const UrlProvider = ({children}) => {
 
   const [state, setState] = React.useState(defaultContextValue);
 
+  React.useEffect(()=>{
+    axios.defaults.baseURL = `${defaultContextValue.protocol}://${defaultContextValue.baseURL}:${defaultContextValue.port}`;
+  },[]);
+
   const setter = React.useCallback((domain)=>{
     if( domain && domain.trim() ){
       const url = { protocol : 'http', baseURL : 'localhost', port: 9002 };
@@ -16,7 +20,7 @@ const UrlProvider = ({children}) => {
         //첫 번째 값이 프로토콜로 구성됨
         url.protocol = urlItems[0];
         url.baseURL = urlItems[1].replace(/[(:\/\/)]/g, '').replace('/','');
-        console.log(url.baseURL);
+
         if(urlItems.length === 3 ){
           const port = urlItems[2].replace(/[^0-9]/g,'');
           if(port){
@@ -27,7 +31,7 @@ const UrlProvider = ({children}) => {
         }
       }else{
         url.protocol = 'http';
-        url.baseURL = urlItems[0].replace(/[(://)]/g,'').replace('/','');
+        url.baseURL = urlItems[0].replace(/[(:\/\/)]/g,'').replace('/','');
         if(urlItems.length === 2 ){
           const port = urlItems[1].replace(/[^0-9]/g,'');
           if(port){

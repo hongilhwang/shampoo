@@ -1,5 +1,5 @@
 import React from 'react';
-import LinkIcon from "@material-ui/icons/Link";
+import {Link as LinkIcon, LinkOff as LinkOffIcon} from "@material-ui/icons";
 import {IconButton, TextField} from "@material-ui/core";
 import SettingsInputCompositeIcon from "@material-ui/icons/SettingsInputComposite";
 import { makeStyles} from "@material-ui/core/styles";
@@ -39,13 +39,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const InputBox = ({ autocompleteParams,  onClick}) => {
+const InputBox = ({ autocompleteParams,  onClick, connected}) => {
   const classes = useStyles();
 
   return (
     <>
       <div className={classes.serverIcon}>
-        <LinkIcon />
+        {connected ? <LinkIcon /> : <LinkOffIcon />}
       </div>
       <TextField
         {...autocompleteParams}

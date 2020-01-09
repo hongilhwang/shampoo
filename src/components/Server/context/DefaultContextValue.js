@@ -1,5 +1,8 @@
 export default ({
-  protocol : 'http',
-  baseURL : 'localhost',
-  port : 9200
+  protocol : process.env.REACT_APP_DEFAULT_PROTOCOL || 'http',
+  baseURL : process.env.REACT_APP_DEFAULT_URL || 'localhost',
+  port : process.env.REACT_APP_DEFAULT_PORT || 9200
 });
+
+
+
