@@ -1,18 +1,19 @@
 import React from 'react';
 import { Frame,  Header } from 'components/Frame'
 import Server from 'components/Server';
-import JsonView, {JsonViewProvider, useJsonView} from 'components/JsonView';
+import {JsonViewProvider, useJsonView} from 'components/JsonView';
 import { ServerProvider } from 'components/Server';
 import Indices, {IndicesProvider, useIndices} from "components/Indices";
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import apis from 'apis';
 import useBaseURL from "components/Server/hooks/useBaseURL";
 import axios from 'axios';
+import DataViewer from 'pages/DataViewer';
 
 function App(){
 
-  const [jsonViewSource, setJsonViewSource] = useJsonView();
-  const [indices, setIndices] = useIndices();
+  const [, setJsonViewSource] = useJsonView();
+  const [, setIndices] = useIndices();
   const { enqueueSnackbar } = useSnackbar();
   const [server] = useBaseURL();
 
@@ -64,7 +65,7 @@ function App(){
         <Indices onChange={handleChange}/>
       )}
     >
-      <JsonView />
+      <DataViewer />
     </Frame>
   )
 
