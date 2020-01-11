@@ -1,5 +1,5 @@
 import React from 'react';
-import DataGrid from "components/DataGrid";
+import DataView from "components/DataView";
 import JsonView from "components/JsonView";
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -33,7 +33,7 @@ const DataViewer = () => {
           <Typography className={classes.heading}>Grid 뷰어</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <DataGrid/>
+          <DataView/>
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel

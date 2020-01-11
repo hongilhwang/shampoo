@@ -27,7 +27,7 @@ const rows = [
 ];
 
 
-const DataGrid = () => {
+const DataView = () => {
 
   const classes = useStyles();
 
@@ -61,4 +61,4 @@ const DataGrid = () => {
   );
 };
 
-export default DataGrid;
+export default DataView;
