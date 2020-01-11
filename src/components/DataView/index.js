@@ -1,3 +1,5 @@
-import DataView from 'src/components/DataView/components/DataView';
+import DataView from './components/DataView';
+export {default as DataViewProvider} from './context/DataViewProvider';
+export {default as useDataView} from './hooks/useDataView';
 
 export default DataView;

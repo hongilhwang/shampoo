@@ -1,14 +1,13 @@
 import React from 'react';
 import { Frame,  Header } from 'components/Frame'
-import Server from 'components/Server';
 import {JsonViewProvider, useJsonView} from 'components/JsonView';
-import { ServerProvider } from 'components/Server';
+import Server, { ServerProvider, useBaseURL } from 'components/Server';
 import Indices, {IndicesProvider, useIndices} from "components/Indices";
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import apis from 'apis';
-import useBaseURL from "components/Server/hooks/useBaseURL";
 import axios from 'axios';
 import DataViewer from 'pages/DataViewer';
+import {useDataView, DataViewProvider} from "components/DataView";
 
 function App(){
 
@@ -16,6 +15,7 @@ function App(){
   const [, setIndices] = useIndices();
   const { enqueueSnackbar } = useSnackbar();
   const [server] = useBaseURL();
+  const [, setDataView] = useDataView();
 
   React.useEffect(()=>{
     axios.baseURI = `${server.protocol}://${server.baseURL}:${server.port}`;
@@ -47,6 +47,10 @@ function App(){
       if( index ){
         const response = await apis.getData(index.index);
         setJsonViewSource(response);
+        if( response && response.data && response.data.hits ){
+          setDataView(response.data.hits);
+        }
+
       }
     }catch(e){
       console.error(e);
@@ -79,7 +83,9 @@ const Provider = () => {
       <ServerProvider>
         <IndicesProvider>
           <JsonViewProvider>
-            <App />
+            <DataViewProvider>
+              <App />
+            </DataViewProvider>
           </JsonViewProvider>
         </IndicesProvider>
       </ServerProvider>
