@@ -14,52 +14,70 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.white, 0.25)
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
+      width: 'auto'
+    }
   },
-  autocomplete:{
-    display: 'flex',
-  },
+  autocomplete: {
+    display: 'flex'
+  }
 }));
 
-const Server = ({onConnect}) => {
+const Server = ({ onConnect }) => {
   const classes = useStyles();
   const [connected, setConnected] = React.useState(false);
   const [server, setServer] = useBaseURL();
-  const [currentInputBoxText, setCurrentInputBoxText] = React.useState(`${server.protocol}://${server.baseURL}:${server.port}`);
+  const [currentInputBoxText, setCurrentInputBoxText] = React.useState(
+    `${server.protocol}://${server.baseURL}:${server.port}`
+  );
 
-  const handleConnectedResult = React.useCallback((result)=>{
-    setConnected(result);
-  },[setConnected]);
+  const handleConnectedResult = React.useCallback(
+    result => {
+      setConnected(result);
+    },
+    [setConnected]
+  );
 
   const handleClickConnectServer = React.useCallback(() => {
     onConnect(handleConnectedResult);
-  },[onConnect, handleConnectedResult]);
-  const handleChangeServerURL = React.useCallback((e, text) => {
-    setServer(text);
-  },[setServer]);
-  const handleBlurInputBox = React.useCallback((e)=>{
-    setServer(e.target.value);
-  },[setServer]);
+  }, [onConnect, handleConnectedResult]);
+  const handleChangeServerURL = React.useCallback(
+    (e, text) => {
+      setServer(text);
+    },
+    [setServer]
+  );
+  const handleBlurInputBox = React.useCallback(
+    e => {
+      setServer(e.target.value);
+    },
+    [setServer]
+  );
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     onConnect(handleConnectedResult);
-  },[server, onConnect, handleConnectedResult]);
+  }, [server, onConnect, handleConnectedResult]);
 
-  const renderInput = React.useCallback(params =>(
-    <InputBox autocompleteParams={params} onClick={handleClickConnectServer} connected={connected}/>
-  ),[handleClickConnectServer, connected]);
+  const renderInput = React.useCallback(
+    params => (
+      <InputBox
+        autocompleteParams={params}
+        onClick={handleClickConnectServer}
+        connected={connected}
+      />
+    ),
+    [handleClickConnectServer, connected]
+  );
 
-  const handleKeyPress = React.useCallback((e)=>{
+  const handleKeyPress = React.useCallback(e => {
     setCurrentInputBoxText(e.target.value);
-  },[]);
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -79,10 +97,12 @@ const Server = ({onConnect}) => {
 };
 
 Server.propTypes = {
-  onConnect : PropTypes.func
+  onConnect: PropTypes.func
 };
 Server.defaultProps = {
-  onConnect: ()=> {console.log('Not found function.');}
+  onConnect: () => {
+    console.log('Not found function.');
+  }
 };
 
 export default Server;

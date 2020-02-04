@@ -61,7 +61,7 @@ function App(){
   return (
     <Frame
       leftHeader={(
-        <Header logo={'Neutrino'} >
+        <Header logo={'Shampoo'} >
           <Server onConnect={handleConnect} />
         </Header>
       )}
