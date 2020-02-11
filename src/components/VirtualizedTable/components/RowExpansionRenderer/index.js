@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Loader } from '@kakao/9rum-ui-react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -42,7 +41,7 @@ const RowExpansionRenderer = ({
   open,
   style
 }) => {
-  const [detail, setDetail] = React.useState(<Loader width="30px" />);
+  const [detail, setDetail] = React.useState(<div>loading</div>);
   const a11yProps = { 'aria-rowindex': index + 1 };
 
   if (onRowClick || onRowDoubleClick || onRowMouseOut || onRowMouseOver || onRowRightClick) {
