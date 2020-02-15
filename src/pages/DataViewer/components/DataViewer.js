@@ -1,6 +1,6 @@
 import React from 'react';
-import DataView from "components/DataView";
-import JsonView from "components/JsonView";
+import DataView from 'components/DataView';
+import JsonView from 'components/JsonView';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -10,38 +10,29 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
+    width: '100%'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
+    fontWeight: theme.typography.fontWeightRegular
+  }
 }));
 
 const DataViewer = () => {
-
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <ExpansionPanel
-        defaultExpanded={true}
-      >
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-        >
+      <ExpansionPanel defaultExpanded>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className={classes.heading}>Grid 뷰어</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <DataView/>
+          <DataView />
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel
-        defaultExpanded={true}
-      >
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-        >
+      <ExpansionPanel defaultExpanded>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className={classes.heading}>Json 뷰어</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>

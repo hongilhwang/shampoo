@@ -3,6 +3,7 @@ import { Link as LinkIcon, LinkOff as LinkOffIcon } from '@material-ui/icons';
 import { IconButton, TextField } from '@material-ui/core';
 import SettingsInputCompositeIcon from '@material-ui/icons/SettingsInputComposite';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   serverIcon: {
@@ -49,7 +50,7 @@ const InputBox = ({ autocompleteParams, onClick, connected }) => {
         {...autocompleteParams}
         placeholder="Server URL"
         className={classes.inputRoot}
-        variant={'outlined'}
+        variant="outlined"
         margin="dense"
         InputProps={{
           ...autocompleteParams.InputProps,
@@ -71,6 +72,18 @@ const InputBox = ({ autocompleteParams, onClick, connected }) => {
       </IconButton>
     </>
   );
+};
+
+InputBox.propTypes = {
+  autocompleteParams: PropTypes.objectOf(PropTypes.string),
+  onClick: PropTypes.func,
+  connected: PropTypes.bool
+};
+
+InputBox.defaultProps = {
+  autocompleteParams: undefined,
+  onClick: () => {},
+  connected: false
 };
 
 export default InputBox;

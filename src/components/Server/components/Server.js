@@ -1,9 +1,9 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import PropTypes from 'prop-types';
 import InputBox from './InputBox';
 import useBaseURL from '../hooks/useBaseURL';
-import PropTypes from 'prop-types';
 
 const DUMMY_OPTIONS = [];
 
@@ -100,9 +100,7 @@ Server.propTypes = {
   onConnect: PropTypes.func
 };
 Server.defaultProps = {
-  onConnect: () => {
-    console.log('Not found function.');
-  }
+  onConnect: () => {}
 };
 
 export default Server;

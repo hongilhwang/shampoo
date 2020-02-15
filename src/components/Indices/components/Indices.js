@@ -1,16 +1,16 @@
 import React from 'react';
-import {fade, makeStyles} from '@material-ui/core/styles';
-import {IconButton, TextField} from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import { IconButton, TextField } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import useIndices from "../hooks/useIndices";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import PropTypes from 'prop-types';
+import useIndices from '../hooks/useIndices';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   selectBox: {
     position: 'relative',
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.white, 0.25)
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -27,8 +27,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       marginLeft: theme.spacing(3),
       width: 'auto',
-      display: 'block',
-    },
+      display: 'block'
+    }
   },
   autocomplete: {
     color: '#FFF'
@@ -36,67 +36,77 @@ const useStyles = makeStyles(theme => ({
   moreButton: {
     display: 'none',
     [theme.breakpoints.down('sm')]: {
-      display: 'block',
-    },
+      display: 'block'
+    }
   },
   textField: {
     color: 'inherit',
     minWidth: 300,
-    margin: '0px',
+    margin: '0px'
   },
   inputProps: {
     padding: theme.spacing(0, 0, 0, 2),
     transition: theme.transitions.create('width'),
-    width: '100%',
+    width: '100%'
   },
   inputPropsInput: {
     color: '#FFF',
     paddingLeft: '0px'
   },
-  inputNotchedOutline : {
+  inputNotchedOutline: {
     borderWidth: 0
   }
 }));
 
-const Indices = ({onChange}) => {
+const Indices = ({ onChange }) => {
   const classes = useStyles();
   const [index, setIndex] = React.useState('');
   const [indices] = useIndices();
 
   const sortedIndices = React.useMemo(
-    ()=>(indices.sort((a,b) => (a.index.localeCompare(b.index, undefined, {numeric: true, sensitivity: 'base'})))),
-    [indices]);
+    () =>
+      indices.sort((a, b) =>
+        a.index.localeCompare(b.index, undefined, { numeric: true, sensitivity: 'base' })
+      ),
+    [indices]
+  );
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     onChange(index);
-  },[index]);
+  }, [index]);
 
-  const handleChange = React.useCallback((e, text) => {
-    setIndex(text);
-  },[setIndex]);
+  const handleChange = React.useCallback(
+    (e, text) => {
+      setIndex(text);
+    },
+    [setIndex]
+  );
 
-  const renderInput = React.useCallback((params)=>(
-    <TextField {...params}
-               className={classes.textField}
-               variant={"outlined"}
-               placeholder="인덱스를 선택해주세요."
-               margin="dense"
-               InputProps={
-                 {
-                   ...params.InputProps,
-                   autoComplete:'disabled',
-                   type: 'text',
-                   className : classes.inputProps,
-                   classes: {
-                     input: classes.inputPropsInput,
-                     notchedOutline : classes.inputNotchedOutline
-                   }
-                 }
-               }
-               fullWidth />
-  ),[classes]);
+  const renderInput = React.useCallback(
+    params => (
+      <TextField
+        {...params}
+        className={classes.textField}
+        variant="outlined"
+        placeholder="인덱스를 선택해주세요."
+        margin="dense"
+        InputProps={{
+          ...params.InputProps,
+          autoComplete: 'disabled',
+          type: 'text',
+          className: classes.inputProps,
+          classes: {
+            input: classes.inputPropsInput,
+            notchedOutline: classes.inputNotchedOutline
+          }
+        }}
+        fullWidth
+      />
+    ),
+    [classes]
+  );
 
-  const renderOption = React.useCallback((option)=>(<div>{option.index}</div>),[]);
+  const renderOption = React.useCallback(option => <div>{option.index}</div>, []);
 
   return (
     <div className={classes.root}>
@@ -112,19 +122,19 @@ const Indices = ({onChange}) => {
           value={index}
         />
       </div>
-      <IconButton  aria-label="indices 목록" className={classes.moreButton} color="inherit">
+      <IconButton aria-label="indices 목록" className={classes.moreButton} color="inherit">
         <MoreIcon />
       </IconButton>
     </div>
   );
 };
 
-Indices.protoTypes = {
+Indices.propTypes = {
   onChange: PropTypes.func
 };
 
 Indices.defaultProps = {
-  onChange : ()=>{console.log('Not found function.');}
+  onChange: () => {}
 };
 
 export default Indices;

@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "cross-env NODE_PATH=src react-scripts start",
-    "test-ci": "cross-env NODE_PATH=src CI=true react-scripts test"
+    "test-ci": "cross-env NODE_PATH=src CI=true react-scripts test",
+    "lint" : "eslint --fix --ext .js,.jsx src/"
   },
   "browserslist": [
     ">0.2%",
@@ -46,6 +47,7 @@
     },
     "extends": [
       "airbnb",
+      "plugin:react/recommended",
       "prettier"
     ],
     "plugins": [
@@ -63,6 +65,7 @@
         "custom" : "ignore",
         "explicitSpred": "ignore"
       }],
+      "no-console" : ["error", { "allow": ["warn", "error"] }],
       "comma-dangle": [
         "error",
         "never"
@@ -94,5 +97,16 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^1.7.0"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

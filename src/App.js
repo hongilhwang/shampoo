@@ -61,12 +61,12 @@ function App(){
   return (
     <Frame
       leftHeader={(
-        <Header logo={'Shampoo'} >
+        <Header logo="Shampoo">
           <Server onConnect={handleConnect} />
         </Header>
       )}
       rightHeader={(
-        <Indices onChange={handleChange}/>
+        <Indices onChange={handleChange} />
       )}
     >
       <DataViewer />

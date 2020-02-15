@@ -1,8 +1,8 @@
 import React from 'react';
-import { Typography } from "@material-ui/core";
+import { Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
-const Header = ({logo, children}) => {
-
+const Header = ({ logo, children }) => {
   return (
     <>
       <Typography variant="h6" noWrap>
@@ -11,6 +11,16 @@ const Header = ({logo, children}) => {
       {children}
     </>
   );
+};
+
+Header.propTypes = {
+  logo: PropTypes.element,
+  children: PropTypes.element
+};
+
+Header.defaultProps = {
+  logo: undefined,
+  children: undefined
 };
 
 export default Header;
