@@ -73,7 +73,7 @@ const Indices = ({ onChange }) => {
 
   React.useEffect(() => {
     onChange(index);
-  }, [index]);
+  }, [onChange, index]);
 
   const handleChange = React.useCallback(
     (e, text) => {
