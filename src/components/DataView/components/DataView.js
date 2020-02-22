@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import useDataView from '../hooks/useDataView';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
   root: {
@@ -8,11 +8,17 @@ const useStyles = makeStyles({
   }
 });
 
-const DataView = () => {
+const DataView = ({ data }) => {
   const classes = useStyles();
-  const [data = []] = useDataView();
 
   return <div className={classes.root}>`테이블${data.length}`</div>;
 };
 
+DataView.propTypes = {
+  data: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.object])
+};
+
+DataView.defaultProps = {
+  data: []
+};
 export default DataView;

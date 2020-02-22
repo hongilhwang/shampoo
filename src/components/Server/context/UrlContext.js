@@ -1,6 +1,6 @@
 import React from 'react';
-import defaultContextValue from './DefaultContextValue'
+import defaultContextValue from './DefaultContextValue';
 
-const defaultContext = [defaultContextValue, ()=>{}];
+const defaultContext = [defaultContextValue, () => {}];
 
 export default React.createContext(defaultContext);

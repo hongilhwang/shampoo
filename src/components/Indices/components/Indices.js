@@ -4,7 +4,6 @@ import { IconButton, TextField } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import PropTypes from 'prop-types';
-import useIndices from '../hooks/useIndices';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,16 +57,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Indices = ({ onChange }) => {
+const Indices = ({ onChange, indices }) => {
   const classes = useStyles();
   const [index, setIndex] = React.useState('');
-  const [indices] = useIndices();
-
   const sortedIndices = React.useMemo(
     () =>
-      indices.sort((a, b) =>
-        a.index.localeCompare(b.index, undefined, { numeric: true, sensitivity: 'base' })
-      ),
+      indices
+        .slice()
+        .sort((a, b) =>
+          a.index.localeCompare(b.index, undefined, { numeric: true, sensitivity: 'base' })
+        ),
     [indices]
   );
 
@@ -114,7 +113,7 @@ const Indices = ({ onChange }) => {
         <Autocomplete
           className={classes.autocomplete}
           options={sortedIndices}
-          getOptionLabel={option => option.index}
+          getOptionLabel={option => option.index || ''}
           onChange={handleChange}
           renderInput={renderInput}
           renderOption={renderOption}
@@ -130,11 +129,13 @@ const Indices = ({ onChange }) => {
 };
 
 Indices.propTypes = {
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  indices: PropTypes.arrayOf(PropTypes.object)
 };
 
 Indices.defaultProps = {
-  onChange: () => {}
+  onChange: () => {},
+  indices: []
 };
 
 export default Indices;

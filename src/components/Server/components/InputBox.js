@@ -75,13 +75,13 @@ const InputBox = ({ autocompleteParams, onClick, connected }) => {
 };
 
 InputBox.propTypes = {
-  autocompleteParams: PropTypes.objectOf(PropTypes.string),
+  autocompleteParams: PropTypes.objectOf(PropTypes.any),
   onClick: PropTypes.func,
   connected: PropTypes.bool
 };
 
 InputBox.defaultProps = {
-  autocompleteParams: undefined,
+  autocompleteParams: {},
   onClick: () => {},
   connected: false
 };

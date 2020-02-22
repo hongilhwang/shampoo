@@ -14,7 +14,7 @@ const Header = ({ logo, children }) => {
 };
 
 Header.propTypes = {
-  logo: PropTypes.element,
+  logo: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   children: PropTypes.element
 };
 

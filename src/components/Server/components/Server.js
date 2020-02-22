@@ -3,7 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import PropTypes from 'prop-types';
 import InputBox from './InputBox';
-import useBaseURL from '../hooks/useBaseURL';
+import DefaultContextValue from '../context/DefaultContextValue';
 
 const DUMMY_OPTIONS = [];
 
@@ -29,40 +29,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Server = ({ onConnect }) => {
+const Server = ({ onConnect, onChange, server, connected }) => {
   const classes = useStyles();
-  const [connected, setConnected] = React.useState(false);
-  const [server, setServer] = useBaseURL();
   const [currentInputBoxText, setCurrentInputBoxText] = React.useState(
     `${server.protocol}://${server.baseURL}:${server.port}`
   );
 
-  const handleConnectedResult = React.useCallback(
-    result => {
-      setConnected(result);
-    },
-    [setConnected]
-  );
-
-  const handleClickConnectServer = React.useCallback(() => {
-    onConnect(handleConnectedResult);
-  }, [onConnect, handleConnectedResult]);
   const handleChangeServerURL = React.useCallback(
     (e, text) => {
-      setServer(text);
+      onChange(text);
     },
-    [setServer]
+    [onChange]
   );
   const handleBlurInputBox = React.useCallback(
     e => {
-      setServer(e.target.value);
+      onChange(e.target.value);
     },
-    [setServer]
+    [onChange]
   );
-
-  React.useEffect(() => {
-    onConnect(handleConnectedResult);
-  }, [server, onConnect, handleConnectedResult]);
+  const handleClickConnectServer = React.useCallback(() => {
+    onConnect();
+  }, [onConnect]);
 
   const renderInput = React.useCallback(
     params => (
@@ -75,9 +62,12 @@ const Server = ({ onConnect }) => {
     [handleClickConnectServer, connected]
   );
 
-  const handleKeyPress = React.useCallback(e => {
-    setCurrentInputBoxText(e.target.value);
-  }, []);
+  const handleKeyPress = React.useCallback(
+    e => {
+      setCurrentInputBoxText(e.target.value);
+    },
+    [setCurrentInputBoxText]
+  );
 
   return (
     <div className={classes.root}>
@@ -97,10 +87,20 @@ const Server = ({ onConnect }) => {
 };
 
 Server.propTypes = {
-  onConnect: PropTypes.func
+  connected: PropTypes.bool,
+  onConnect: PropTypes.func,
+  onChange: PropTypes.func,
+  server: PropTypes.shape({
+    protocol: PropTypes.string,
+    baseURL: PropTypes.string,
+    port: PropTypes.number
+  })
 };
 Server.defaultProps = {
-  onConnect: () => {}
+  connected: false,
+  onConnect: () => {},
+  onChange: text => text,
+  server: DefaultContextValue
 };
 
 export default Server;

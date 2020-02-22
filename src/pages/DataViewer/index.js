@@ -1,3 +1,3 @@
-import DataViewer from './components/DataViewer';
+import DataViewer from 'pages/DataViewer/components/DataViewer';
 
 export default DataViewer;

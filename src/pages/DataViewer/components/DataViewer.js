@@ -1,4 +1,5 @@
 import React from 'react';
+
 import DataView from 'components/DataView';
 import JsonView from 'components/JsonView';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +8,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const DataViewer = () => {
   const classes = useStyles();
+  const data = useSelector(state => state.dataView);
 
   return (
     <div className={classes.root}>
@@ -28,7 +31,7 @@ const DataViewer = () => {
           <Typography className={classes.heading}>Grid 뷰어</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <DataView />
+          <DataView data={data} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel defaultExpanded>
@@ -36,11 +39,15 @@ const DataViewer = () => {
           <Typography className={classes.heading}>Json 뷰어</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <JsonView />
+          <JsonView data={data} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>
   );
 };
+
+DataViewer.propTypes = {};
+
+DataViewer.defaultProps = {};
 
 export default DataViewer;
