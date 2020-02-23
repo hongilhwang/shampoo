@@ -16,11 +16,8 @@ const Shampoo = () => {
   const server = useSelector(state => state.server);
   const indices = useSelector(state => state.indices);
   const dispatch = useDispatch();
-
+  const loadRoot = React.useCallback(() => dispatch(actions.meta.loadRoot.onRequest()), [dispatch]);
   const setServer = React.useCallback(payload => dispatch(actions.server.setServer(payload)), [
-    dispatch
-  ]);
-  const setIndices = React.useCallback(payload => dispatch(actions.indices.setIndices(payload)), [
     dispatch
   ]);
   const setDataView = React.useCallback(
@@ -47,22 +44,9 @@ const Shampoo = () => {
   );
 
   const handleConnect = React.useCallback(async () => {
-    axios.defaults.baseURL = `${server.protocol}://${server.baseURL}:${server.port}`;
-    try {
-      const response = await apis.getRoot();
-      setDataView(response.data);
-      setConnected(true);
-      try {
-        const indicesResponse = await apis.getIndices();
-        setIndices(indicesResponse.data);
-      } catch (e) {
-        showError(e);
-      }
-    } catch (e) {
-      setConnected(false);
-      showError(e);
-    }
-  }, [showError, server, setConnected, setDataView, setIndices]);
+    loadRoot();
+    setConnected(true);
+  }, [server, setConnected]);
 
   const handleChange = React.useCallback(
     async index => {

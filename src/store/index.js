@@ -4,23 +4,30 @@ import createSagaMiddleware from 'redux-saga';
 import reducer from 'reducers';
 import saga from 'sagas';
 
-const devMode = process.env.REACT_APP_ENV === 'development';
+const devTools = process.env.REACT_APP_ENV === 'development';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
+const middleware = [
+  ...getDefaultMiddleware({
+    thunk: false,
+    serializableCheck: false
+  }),
+  sagaMiddleware
+];
 
-if (devMode) {
+if (devTools) {
   middleware.push(logger);
 }
 
-const createStore = (preloadedState = reducer()) => {
-  const store = configureStore({
+const createStore = () => {
+  const options = {
     reducer,
-    devTools: devMode,
-    middleware,
-    preloadedState
-  });
+    devTools,
+    middleware
+  };
+
+  const store = configureStore(options);
   sagaMiddleware.run(saga);
   return store;
 };
