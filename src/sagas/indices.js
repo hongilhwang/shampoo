@@ -3,7 +3,6 @@ import actions from 'actions';
 import apis from 'apis';
 
 export function* loadIndices() {
-  console.log(actions.indices);
   try {
     const response = yield call(apis.getIndices);
     if (response.status === 200) {
