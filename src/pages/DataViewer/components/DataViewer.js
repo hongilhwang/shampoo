@@ -22,7 +22,8 @@ const useStyles = makeStyles(theme => ({
 
 const DataViewer = () => {
   const classes = useStyles();
-  const data = useSelector(state => state.dataView);
+  const rootData = useSelector(state => state.data.root);
+  const resultData = useSelector(state => state.data.result);
 
   return (
     <div className={classes.root}>
@@ -31,7 +32,7 @@ const DataViewer = () => {
           <Typography className={classes.heading}>Grid 뷰어</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <DataView data={data} />
+          <DataView data={resultData || rootData} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel defaultExpanded>
@@ -39,7 +40,7 @@ const DataViewer = () => {
           <Typography className={classes.heading}>Json 뷰어</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <JsonView data={data} />
+          <JsonView data={resultData || rootData} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

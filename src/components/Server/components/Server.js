@@ -48,8 +48,8 @@ const Server = ({ onConnect, onChange, server, connected }) => {
     [onChange]
   );
   const handleClickConnectServer = React.useCallback(() => {
-    onConnect();
-  }, [onConnect]);
+    onConnect(currentInputBoxText);
+  }, [onConnect, currentInputBoxText]);
 
   const renderInput = React.useCallback(
     params => (

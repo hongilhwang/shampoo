@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import server from './server';
-import indices from './indices';
-import dataView from './dataView';
+import shampoo from 'pages/Shampoo/slice/shampoo';
+import data from 'pages/DataViewer/slice/dataViewer';
 
 export default combineReducers({
-  server,
-  indices,
-  dataView
+  shampoo,
+  data
 });
