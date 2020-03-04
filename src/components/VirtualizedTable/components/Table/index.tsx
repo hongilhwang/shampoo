@@ -9,9 +9,9 @@ import {
   Table,
   defaultTableRowRenderer as DefaultTableRowRenderer
 } from 'react-virtualized';
-import BodyCell from '../BodyCell';
-import HeadCell from '../HeadCell';
-import RowExpansionRenderer from '../RowExpansionRenderer';
+import BodyCell from 'components/VirtualizedTable/components/BodyCell';
+import HeadCell from 'components/VirtualizedTable/components/HeadCell';
+import RowExpansionRenderer from 'components/VirtualizedTable/components/RowExpansionRenderer';
 
 const styles = theme => ({
   table: {

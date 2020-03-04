@@ -2,7 +2,7 @@ import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import PropTypes from 'prop-types';
-import InputBox from './InputBox';
+import InputBox from 'components/Server/components/InputBox';
 import DefaultContextValue from '../context/DefaultContextValue';
 
 const DUMMY_OPTIONS = [];

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import stringToServer from 'utils/stringToServer';
-import UrlContext from './UrlContext';
-import defaultContextValue from './DefaultContextValue';
+import UrlContext from 'components/Server/context/UrlContext';
+import defaultContextValue from 'components/Server/context/DefaultContextValue';
 
 const UrlProvider = ({ children }) => {
   const [state, setState] = React.useState(defaultContextValue);

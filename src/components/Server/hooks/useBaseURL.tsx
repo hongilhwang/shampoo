@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import UrlContext from '../context/UrlContext';
+import UrlContext from 'components/Server/context/UrlContext';
 
 const useBaseURL = () => useContext(UrlContext);
 

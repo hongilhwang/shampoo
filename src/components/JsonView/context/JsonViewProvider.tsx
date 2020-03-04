@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import JsonViewContext from './JsonViewContext';
+import JsonViewContext from 'components/JsonView/context/JsonViewContext';
 
 const JsonViewProvider = ({ children }) => {
   const [state, setState] = React.useState('');

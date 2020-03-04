@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import store from 'store';
 import DataViewer from 'pages/DataViewer';
-import Shampoo from './pages/Shampoo';
+import Shampoo from 'pages/Shampoo';
 
 const App = () => {
   return (

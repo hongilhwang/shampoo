@@ -5,7 +5,6 @@ import apis from 'apis';
 import { HTTP_GET_OK } from 'utils/httpStatusCode';
 
 function* loadSearch(action) {
-
   const currentIndex = yield select(state => state.shampoo.index);
   const index = action.payload || currentIndex;
 

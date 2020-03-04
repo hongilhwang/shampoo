@@ -1,5 +1,5 @@
 import React from 'react';
-import defaultContextValue from './DefaultContextValue';
+import defaultContextValue from 'components/Server/context/DefaultContextValue';
 
 const defaultContext = [defaultContextValue, () => {}];
 
