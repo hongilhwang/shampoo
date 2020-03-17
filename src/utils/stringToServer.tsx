@@ -1,9 +1,9 @@
-export default domain => {
-  const url = {
-    protocol: undefined,
-    baseURL: undefined,
-    port: undefined
-  };
+import {
+defaultServerValue,  ServerType, ProtocolType
+} from 'components/Server/context/UrlContext';
+
+export default (domain: string):ServerType => {
+  const url:ServerType = defaultServerValue;
 
   if (domain && domain.trim()) {
     let domainString = domain.trim();
@@ -12,11 +12,11 @@ export default domain => {
       domainString = `http://${domainString}`;
     }
 
-    const [protocol, baseURL, port = 9002] = domainString.split(':');
+    const [protocol, baseURL, port] = domainString.split(':');
 
-    url.protocol = protocol;
+    url.protocol = protocol as ProtocolType;
     url.baseURL = baseURL.replace(/[(://)]/g, '').replace('/', '');
-    url.port = parseInt(port.replace(/[^0-9]/g, ''), 10);
+    url.port = parseInt((port || "9002").replace(/[^0-9]/g, ''), 10);
   }
 
   return url;

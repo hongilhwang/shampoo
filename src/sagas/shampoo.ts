@@ -1,11 +1,17 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
+import { ServerType } from 'components/Server/context/UrlContext';
 import { actions as shampooActions } from 'pages/Shampoo/slice/shampoo';
 import { actions as dataActions } from 'pages/DataViewer/slice/dataViewer';
 import apis from 'apis';
 import axios from 'axios';
 import { HTTP_GET_OK } from 'utils/httpStatusCode';
 
-function* loadServer(action) {
+interface LoadServerAction {
+  type: typeof shampooActions.loadServer.type;
+  payload: ServerType;
+}
+
+function* loadServer(action: LoadServerAction) {
   const server = action.payload;
   axios.defaults.baseURL = `${server.protocol}://${server.baseURL}:${server.port}`;
   yield put(shampooActions.setServer(action.payload));
@@ -21,7 +27,7 @@ function* loadServer(action) {
       throw new Error(`서버 접속에 실패 하였습니다.[${response.status}]`);
     }
   } catch (e) {
-    yield put(shampooActions.setConnected, false);
+    yield put(shampooActions.setConnected(false));
   }
 }
 

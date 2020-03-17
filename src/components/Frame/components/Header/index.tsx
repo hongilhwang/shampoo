@@ -1,8 +1,15 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
-const Header = ({ logo, children }) => {
+interface HeaderProps {
+  logo: React.ReactElement | string;
+  children: React.ReactElement;
+}
+
+const Header: React.FunctionComponent<HeaderProps> = ({
+  logo,
+  children
+}: HeaderProps): React.ReactElement => {
   return (
     <>
       <Typography variant="h6" noWrap>
@@ -11,11 +18,6 @@ const Header = ({ logo, children }) => {
       {children}
     </>
   );
-};
-
-Header.propTypes = {
-  logo: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  children: PropTypes.element
 };
 
 Header.defaultProps = {

@@ -1,11 +1,10 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import PropTypes from 'prop-types';
 import InputBox from 'components/Server/components/InputBox';
-import DefaultContextValue from '../context/DefaultContextValue';
+import { ServerType, defaultServerValue } from '../context/UrlContext';
 
-const DUMMY_OPTIONS = [];
+const DUMMY_OPTIONS: object[] = [];
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +28,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Server = ({ onConnect, onChange, server, connected }) => {
+type OnConnectType = (text?: string) => void;
+type OnChangeType = (text?: string) => void;
+
+interface ServerProps {
+  onConnect: OnConnectType;
+  onChange: OnChangeType;
+  server: ServerType;
+  connected: boolean;
+}
+
+const Server: React.FunctionComponent<ServerProps> = ({
+  onConnect,
+  onChange,
+  server = defaultServerValue,
+  connected = false
+}: ServerProps) => {
   const classes = useStyles();
   const [currentInputBoxText, setCurrentInputBoxText] = React.useState(
     `${server.protocol}://${server.baseURL}:${server.port}`
@@ -85,22 +99,4 @@ const Server = ({ onConnect, onChange, server, connected }) => {
     </div>
   );
 };
-
-Server.propTypes = {
-  connected: PropTypes.bool,
-  onConnect: PropTypes.func,
-  onChange: PropTypes.func,
-  server: PropTypes.shape({
-    protocol: PropTypes.string,
-    baseURL: PropTypes.string,
-    port: PropTypes.number
-  })
-};
-Server.defaultProps = {
-  connected: false,
-  onConnect: () => {},
-  onChange: text => text,
-  server: DefaultContextValue
-};
-
 export default Server;

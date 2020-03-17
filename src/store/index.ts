@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware, EnhancedStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import reducer from 'reducers';
@@ -20,7 +20,7 @@ if (devTools) {
   middleware.push(logger);
 }
 
-const createStore = () => {
+const createStore = (): EnhancedStore => {
   const options = {
     reducer,
     devTools,

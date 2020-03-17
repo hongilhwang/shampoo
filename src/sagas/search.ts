@@ -4,7 +4,12 @@ import { actions as shampooActions } from 'pages/Shampoo/slice/shampoo';
 import apis from 'apis';
 import { HTTP_GET_OK } from 'utils/httpStatusCode';
 
-function* loadSearch(action) {
+interface LoadSearchAction {
+  type: string;
+  payload: string;
+}
+
+function* loadSearch(action: LoadSearchAction) {
   const currentIndex = yield select(state => state.shampoo.index);
   const index = action.payload || currentIndex;
 

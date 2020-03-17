@@ -1,15 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import stringToServer from 'utils/stringToServer';
-import UrlContext from 'components/Server/context/UrlContext';
-import defaultContextValue from 'components/Server/context/DefaultContextValue';
+import UrlContext, { defaultServerValue, ServerType } from 'components/Server/context/UrlContext';
 
-const UrlProvider = ({ children }) => {
-  const [state, setState] = React.useState(defaultContextValue);
+interface UrlProviderProps {
+  children: React.ReactChildren;
+}
+const UrlProvider: React.FunctionComponent<UrlProviderProps> = ({ children }: UrlProviderProps) => {
+  const [state, setState] = React.useState(defaultServerValue);
 
   const setter = React.useCallback(
     domain => {
-      const url = stringToServer(domain);
+      const url: ServerType = stringToServer(domain);
       setState(url);
     },
     [setState]
@@ -17,7 +18,5 @@ const UrlProvider = ({ children }) => {
 
   return <UrlContext.Provider value={[state, setter]}>{children}</UrlContext.Provider>;
 };
-UrlProvider.propTypes = {
-  children: PropTypes.element.isRequired
-};
+
 export default UrlProvider;

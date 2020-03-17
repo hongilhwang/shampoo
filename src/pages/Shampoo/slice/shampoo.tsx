@@ -1,8 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DefaultContextValue } from 'components/Server';
+import { ServerType, defaultServerValue } from 'components/Server/context/UrlContext';
 
-const initialState = {
-  server: DefaultContextValue,
+interface InitialStateType {
+  server: ServerType;
+  index: string;
+  indices: undefined;
+  connected: boolean;
+}
+
+const initialState: InitialStateType = {
+  server: defaultServerValue,
   index: undefined,
   indices: undefined,
   connected: false

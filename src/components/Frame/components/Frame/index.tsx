@@ -16,7 +16,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import PropTypes from 'prop-types';
 
 const drawerWidth = 240;
 
@@ -76,7 +75,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Frame = ({ leftHeader, rightHeader, children }) => {
+interface FrameProps{
+  leftHeader: React.ReactElement;
+  rightHeader: React.ReactElement;
+  children: React.ReactChildren;
+}
+
+const Frame :React.FunctionComponent<FrameProps> = ({ leftHeader, rightHeader, children }:FrameProps): React.ReactElement => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -157,11 +162,6 @@ const Frame = ({ leftHeader, rightHeader, children }) => {
   );
 };
 
-Frame.propTypes = {
-  leftHeader: PropTypes.element,
-  rightHeader: PropTypes.element,
-  children: PropTypes.element
-};
 
 Frame.defaultProps = {
   leftHeader: undefined,

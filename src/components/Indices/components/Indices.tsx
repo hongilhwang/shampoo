@@ -3,7 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import { IconButton, TextField } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import PropTypes from 'prop-types';
+import defaultIndices, { indexType, indicesType } from '../context/DefaultContextValue';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,9 +57,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Indices = ({ onChange, indices }) => {
+type onChangeType = (index?: indexType) => void;
+const defaultOnChangeType: onChangeType = () => {
+  // onChange function
+};
+
+interface IndicesProps {
+  onChange: onChangeType;
+  indices: indicesType;
+}
+
+const Indices: React.FunctionComponent<IndicesProps> = ({
+  onChange = defaultOnChangeType,
+  indices = defaultIndices
+}: IndicesProps): React.ReactElement => {
   const classes = useStyles();
-  const [index, setIndex] = React.useState('');
+  const [index, setIndex] = React.useState(undefined);
   const sortedIndices = React.useMemo(
     () =>
       indices
@@ -126,16 +139,6 @@ const Indices = ({ onChange, indices }) => {
       </IconButton>
     </div>
   );
-};
-
-Indices.propTypes = {
-  onChange: PropTypes.func,
-  indices: PropTypes.arrayOf(PropTypes.object)
-};
-
-Indices.defaultProps = {
-  onChange: () => {},
-  indices: []
 };
 
 export default Indices;
